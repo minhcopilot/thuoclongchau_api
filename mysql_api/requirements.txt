@@ -1,0 +1,14 @@
+fastapi==0.103.1
+uvicorn==0.23.2
+python-dotenv==1.0.0
+pydantic-settings==2.0.3
+passlib[bcrypt]==1.7.4
+python-jose[cryptography]==3.3.0
+pymysql==1.1.0
+SQLAlchemy==2.0.20
+pydantic[email]==2.5.0
+pydantic==2.5.0
+python-multipart==0.0.9
+fastapi_mail==1.4.1
+google-auth==2.29.0
+google_auth_oauthlib==1.2.0

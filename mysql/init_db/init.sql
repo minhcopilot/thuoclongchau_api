@@ -47,8 +47,8 @@ CREATE TABLE Categories (
 CREATE TABLE Customers (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    passowrd VARCHAR(255) NULL,
+    email VARCHAR(255) unique NOT NULL,
+    password VARCHAR(255) NULL,
     is_verified tinyint(1),
     phone VARCHAR(20),
     address VARCHAR(255)

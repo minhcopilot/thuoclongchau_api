@@ -1,4 +1,7 @@
 /venv
+/env
+env/
+env/*
 /.idea
 /fastapi.db
 /.pytest_cache
