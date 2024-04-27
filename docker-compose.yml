@@ -1,0 +1,23 @@
+version: "3.9"
+services:
+  mysql_service:
+    container_name: mysql_service
+    build: ./mysql
+    ports:
+      - "6603:3306"
+
+  api_service:
+    container_name: api_service
+    build: ./mysql_api
+    ports:
+      - "9000:8000"
+
+  data_crawling:
+    build: ./data_crawling
+    ports:
+      - "8081:9002"
+
+  search_webpage:
+    build: ./search_webpage
+    ports:
+      - "3001:8080"
