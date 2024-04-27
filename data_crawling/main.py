@@ -25,12 +25,13 @@ db = mysql.connector.connect(
 cursor = db.cursor()
 
 app = FastAPI()
+
 current_skip_count = 0
 
 @app.get("/")
 def index():
     return {"title": "Hello:)"}
-@app.post("/save_products")
+@app.get("/save_products")
 async def save_products():
     global current_skip_count
     max_result_count = 5
