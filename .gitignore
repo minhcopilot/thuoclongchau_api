@@ -1,0 +1,7 @@
+/venv
+/.idea
+/fastapi.db
+/.pytest_cache
+.env
+__pycache__/
+client_secrets.json
