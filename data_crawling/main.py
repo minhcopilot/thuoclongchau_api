@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 import requests
 import mysql.connector
-
+from apscheduler.schedulers.background import BackgroundScheduler
 import os
 from pathlib import Path
 from dotenv import load_dotenv
@@ -34,7 +34,7 @@ def index():
     return {"title": "Hello :)"}
 
 @app.get("/save_products")
-async def save_products():
+def save_products():
     global current_skip_count
     max_result_count = 5
     url = "https://api.nhathuoclongchau.com.vn/lccus/search-product-service/api/products/ecom/product/search/cate"
@@ -125,3 +125,14 @@ async def save_products():
     # Trả về thông báo lỗi nếu yêu cầu không thành công
     else:
         return {"error": f"Yêu cầu không thành công. Mã lỗi: {response.status_code}"}
+    
+# Cấu hình lịch trình để crawl dữ liệu hằng ngày 
+# scheduler = BackgroundScheduler()
+# scheduler.add_job(save_products, 'cron', hour=0, minute=0)# Chạy vào lúc 00:00
+# scheduler.add_job(save_products, 'interval', seconds=10)# Chạy sau 10 giây sử dụng seconds, minutes, hours hoặc days.
+# scheduler.start()
+
+# Dừng tác vụ lặp lại khi ứng dụng tắt
+@app.on_event("shutdown")
+async def shutdown_event():
+    scheduler.shutdown()

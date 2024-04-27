@@ -8,5 +8,7 @@ env\Scripts\activate
 pip install -r requirements.txt
 
 #chạy app
+uvicorn main:app --reload
 uvicorn app.main:app --reload
+
 
