@@ -12,7 +12,7 @@ env\Scripts\activate
 pip install -r requirements.txt
 
 #chạy app
-uvicorn main:app --reload
+uvicorn main:app --host 0.0.0.0 --port 8081 --reload
 
 
 Đối với service mysql_api thì là như sau để chạy được:
@@ -29,6 +29,8 @@ env\Scripts\activate
 pip install -r requirements.txt
 
 #chạy app
-uvicorn app.main:app --reload
+uvicorn main:app --reload (mặc định cổng 8000)
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+docker network
 
-
+c

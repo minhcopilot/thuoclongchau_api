@@ -43,30 +43,3 @@ CREATE TABLE Categories (
     productSKU VARCHAR(255),
     FOREIGN KEY (productSKU) REFERENCES Products(sku)
 );
-
-CREATE TABLE Customers (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) unique NOT NULL,
-    password VARCHAR(255) NULL,
-    is_verified tinyint(1),
-    phone VARCHAR(20),
-    address VARCHAR(255)
-);
-CREATE TABLE Orders (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    customer_id INT NOT NULL,
-    order_date DATETIME NOT NULL,
-    total_amount DECIMAL(10, 2) NOT NULL,
-    status VARCHAR(50) NOT NULL,
-    FOREIGN KEY (customer_id) REFERENCES Customers(id)
-);
-CREATE TABLE Order_Details (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    order_id INT NOT NULL,
-    product_sku VARCHAR(255) NOT NULL,
-    quantity INT NOT NULL,
-    price DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (order_id) REFERENCES Orders(id),
-    FOREIGN KEY (product_sku) REFERENCES Products(sku)
-);

@@ -18,8 +18,10 @@ services:
     ports:
       - "8081:9002"
 
-  search_webpage:
-    container_name: webpage_service
-    build: ./search_webpage
-    ports:
-      - "3001:8080"
+  # search_webpage:
+  #   container_name: webpage_service
+  #   build: ./search_webpage
+  #   ports:
+  #     - "3001:8080"
+  #   networks:
+  #     - networkName
