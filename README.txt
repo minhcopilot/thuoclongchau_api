@@ -33,4 +33,3 @@ uvicorn main:app --reload (mặc định cổng 8000)
 uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 docker network
 
-c

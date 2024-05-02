@@ -43,3 +43,6 @@ CREATE TABLE Categories (
     productSKU VARCHAR(255),
     FOREIGN KEY (productSKU) REFERENCES Products(sku)
 );
+CREATE TABLE SkipCount  (
+    current_skip_count INT PRIMARY KEY
+);
