@@ -1,9 +1,10 @@
 from fastapi import FastAPI,status,Request
 import mysql.connector
+from fastapi.responses import JSONResponse
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-from queries import INSERT_PRODUCT_QUERY, INSERT_PRICE_QUERY, INSERT_CATEGORY_QUERY
+from queries import INSERT_PRODUCT_QUERY, INSERT_PRICE_QUERY, INSERT_CATEGORY_QUERY, GET_ALL_PRODUCTS_QUERY
 
 env_path = Path(".") / ".env"
 load_dotenv(dotenv_path=env_path)
@@ -78,3 +79,30 @@ async def save_products(request: Request):
     except mysql.connector.Error as error:
         db.rollback()
         return {"error": str(error)}, status.HTTP_500_INTERNAL_SERVER_ERROR
+    
+#Get All Product
+@app.get("/products")
+async def get_products():
+    try:
+        cursor.execute(GET_ALL_PRODUCTS_QUERY)
+        products = cursor.fetchall()
+
+        product_dicts = []
+        for product in products:
+            prices = product[4].split(';') if product[4] else []
+            measure_units = product[6].split(';') if product[6] else []
+            product_dict = {
+                "sku": product[0],
+                "webName": product[1],
+                "image": product[2],
+                "specification": product[3],
+                "price": prices,
+                "currencySymbol": product[5],
+                "measureUnitName": measure_units,
+            }
+            product_dicts.append(product_dict)
+
+        return product_dicts
+    except mysql.connector.Error as error:
+        print("Error fetching products:", error)
+        return JSONResponse(status_code=500, content={"error": "Internal Server Error"})
