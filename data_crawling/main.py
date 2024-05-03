@@ -49,8 +49,7 @@ def crawl_data():
     response = requests.post(API_URL, json=body)
     if response.status_code == 200:
         data = response.json()
-        
-        save_response = requests.post("http://localhost:8000/save_products", data=json.dumps(data))
+        save_response = requests.post("http://api_service:8080/save_products", data=json.dumps(data))
         if save_response.status_code == 200:
             current_skip_count += MAX_RESULT_COUNT
             print(f"{MAX_RESULT_COUNT} sản phẩm đã được lưu thành công")

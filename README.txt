@@ -30,6 +30,6 @@ pip install -r requirements.txt
 
 #chạy app
 uvicorn main:app --reload (mặc định cổng 8000)
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+uvicorn main:app --host 0.0.0.0 --port 8080 --reload
 docker network
 
