@@ -4,7 +4,9 @@ from fastapi.responses import JSONResponse
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-from queries import INSERT_PRODUCT_QUERY, INSERT_PRICE_QUERY, INSERT_CATEGORY_QUERY, GET_ALL_PRODUCTS_QUERY, SEARCH_PRODUCTS_QUERY
+from fastapi import Query
+from queries import *
+
 
 env_path = Path(".") / ".env"
 load_dotenv(dotenv_path=env_path)
@@ -106,44 +108,37 @@ async def get_products():
     except mysql.connector.Error as error:
         print("Error fetching products:", error)
         return JSONResponse(status_code=500, content={"error": "Internal Server Error"})
+    
+# Get Detail Product
+@app.get("/product-detail/{sku}")
+async def get_product_detail(sku: str):
+    try:
+        cursor.execute(GET_DETAIL_PRODUCT_QUERY, (sku,))
+        products = cursor.fetchall()
 
-#Search Product
-from fastapi import Query
+        product_dicts = []
+        for product in products:
+            prices = product[8].split(';') if product[8] else []
+            measure_units = product[9].split(';') if product[9] else []
+            product_dict = {
+                "sku": product[0],
+                "webName": product[1],
+                "image": product[2],
+                "specification": product[3],
+                "ingredients": product[4],
+                "dosageForm": product[5],
+                "brand": product[6],
+                "slug": product[7],
+                "price": prices,
+                "currencySymbol": product[10],
+                "measureUnitName": measure_units,
+            }
+            product_dicts.append(product_dict)
 
-# @app.get("/product")
-# async def get_products(webName: str = Query(None)):
-#     try:
-#         if webName:
-#             cursor.execute(SEARCH_PRODUCTS_QUERY, f"%{webName}%")
-#         else:
-#             cursor.execute(GET_ALL_PRODUCTS_QUERY)
-        
-#         products = cursor.fetchall()
-#         # Chuyển đổi danh sách tuples thành danh sách dictionaries
-#         product_dicts = []
-#         for product in products:
-#             prices = product[4].split(';') if product[4] else []
-#             measure_units = product[6].split(';') if product[6] else []
-#             product_dict = {
-#                 "sku": product[0],
-#                 "webName": product[1],
-#                 "image": product[2],
-#                 "specification": product[3],
-#                 "price": prices,
-#                 "currencySymbol": product[5],
-#                 "measureUnitName": measure_units,
-#             }
-#             product_dicts.append(product_dict)
-
-#         # Trả về danh sách JSON hợp lệ
-#         return product_dicts
-#     except mysql.connector.Error as error:
-#         print("Error fetching products:", error)
-#         return JSONResponse(status_code=500, content={"error": "Internal Server Error"})
-
-
-
-
+        return product_dicts
+    except mysql.connector.Error as error:
+        print("Error fetching products:", error)
+        return JSONResponse(status_code=500, content={"error": "Internal Server Error"})
 
 #Get Categories
 @app.get("/getCategories")
@@ -232,61 +227,6 @@ def getUserInfo(username: str):
         if user:
             return {"id": user[0], "username": user[1], "password": user[2], "email": user[3], "phone": user[4], "address": user[5]}
         return {"error": "User not found"}
-    
-
-
-
-
-# def fetch_products(webName: str = None, category: str = None, brand: str = None):
-#     try:
-#         if webName or category or brand:
-#             # Tạo điều kiện WHERE dựa trên các tham số đầu vào
-#             conditions = []
-#             params = []
-#             if webName:
-#                 conditions.append("p.webName LIKE %s")
-#                 params.append(f"%{webName}%")
-#             if category:
-#                 conditions.append("p.category LIKE %s")
-#                 params.append(f"%{category}%")
-#             if brand:
-#                 conditions.append("p.brand LIKE %s")
-#                 params.append(f"%{brand}%")
-
-#             # Tạo câu truy vấn với các điều kiện WHERE
-#             where_clause = " AND ".join(conditions)
-#             query = SEARCH_PRODUCTS_QUERY + " WHERE " + where_clause
-
-#             cursor.execute(query, tuple(params))
-#         else:
-#             cursor.execute(GET_ALL_PRODUCTS_QUERY)
-
-#         products = cursor.fetchall()
-#         return products
-#     except mysql.connector.Error as error:
-#         print("Error fetching products:", error)
-#         return JSONResponse(status_code=500, content={"error": "Internal Server Error"})
-
-# @app.get("/search")
-# async def search_product(webName: str = Query(None), category: str = Query(None), brand: str = Query(None)):
-#     products = fetch_products(webName, category, brand)
-#     product_dicts = []
-
-#     for product in products:
-#         prices = product[4].split(';') if product[4] else []
-#         measure_units = product[6].split(';') if product[6] else []
-#         product_dict = {
-#             "sku": product[0],
-#             "webName": product[1],
-#             "image": product[2],
-#             "specification": product[3],
-#             "price": prices,
-#             "currencySymbol": product[5],
-#             "measureUnitName": measure_units,
-#         }
-#         product_dicts.append(product_dict)
-
-#     return product_dicts
 
 
 @app.get("/search")
