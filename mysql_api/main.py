@@ -106,6 +106,28 @@ async def get_products():
     except mysql.connector.Error as error:
         print("Error fetching products:", error)
         return JSONResponse(status_code=500, content={"error": "Internal Server Error"})
+#Get Categories
+@app.get("/getCategories")
+async def getCategories():
+    try:
+        cursor.execute("""SELECT * FROM Categories""")
+        categories = cursor.fetchall()
+
+        categories_dicts = []
+        for cate in categories:
+            cate_dict = {
+                "id": cate[0],
+                "name": cate[1],
+                "parentName": cate[2],
+                "slug": cate[3],
+                "level": cate[5]
+            }
+            categories_dicts.append(cate_dict)
+
+        return categories_dicts
+    except mysql.connector.Error as error:
+        print("Error fetching categories:", error)
+        return JSONResponse(status_code=500, content={"error": "Internal Server Error"})
 
 @app.post("/register")
 async def register(request: Request):
