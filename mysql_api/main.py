@@ -119,7 +119,7 @@ async def get_product_detail(sku: str):
         product_dicts = []
         for product in products:
             prices = product[8].split(';') if product[8] else []
-            measure_units = product[9].split(';') if product[9] else []
+            measure_units = product[10].split(';') if product[10] else []
             product_dict = {
                 "sku": product[0],
                 "webName": product[1],
@@ -130,7 +130,7 @@ async def get_product_detail(sku: str):
                 "brand": product[6],
                 "slug": product[7],
                 "price": prices,
-                "currencySymbol": product[10],
+                "currencySymbol": product[9],
                 "measureUnitName": measure_units,
             }
             product_dicts.append(product_dict)
@@ -229,6 +229,7 @@ def getUserInfo(username: str):
         return {"error": "User not found"}
 
 
+#Search product
 @app.get("/search")
 async def search_product(s: str = Query(None)):
     try:
