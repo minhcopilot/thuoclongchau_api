@@ -155,7 +155,17 @@ async def login(request: Request):
             cursor.execute("SELECT * FROM User WHERE username = %s AND password = %s", (username, password))
             user = cursor.fetchone()
             if user:
-                return {"message": "Login successful", "status": status.HTTP_200_OK}
+                return {
+                    "message": "Login successful",
+                    "user": {
+                        "id": user[0],
+                        "username": user[1],
+                        "email": user[3],
+                        "phone": user[4],
+                        "address": user[5]
+                    },
+                    "status": status.HTTP_200_OK
+                }
             return {"error": "Invalid username or password", "status": status.HTTP_401_UNAUTHORIZED}
         
     except ValueError as e:
