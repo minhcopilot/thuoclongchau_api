@@ -106,3 +106,68 @@ async def get_products():
     except mysql.connector.Error as error:
         print("Error fetching products:", error)
         return JSONResponse(status_code=500, content={"error": "Internal Server Error"})
+
+@app.post("/register")
+async def register(request: Request):
+    try:
+        body = await request.body()
+        if not body:
+            return {"error": "No data received", "status": status.HTTP_400_BAD_REQUEST}
+
+        data = await request.json()
+        username = data.get("username")
+        password = data.get("password")
+        
+        if not username or not password:
+            return {"error": "Username and password are required", "status": status.HTTP_400_BAD_REQUEST}
+        
+        with db.cursor() as cursor:
+            cursor.execute("SELECT * FROM User WHERE username = %s", (username,))
+            result = cursor.fetchone()
+            if result:
+                return {"error": "User already exists", "status": status.HTTP_400_BAD_REQUEST}
+
+        with db.cursor() as cursor:
+            cursor.execute("INSERT INTO User (username, password) VALUES (%s, %s)", (username, password))
+            db.commit()
+            return {"message": "User registered successfully", "status": status.HTTP_201_CREATED}
+    except ValueError as e:
+        return {"error": str(e), "status": status.HTTP_400_BAD_REQUEST}
+    except mysql.connector.Error as error:
+        db.rollback()
+        return {"error": str(error), "status": status.HTTP_500_INTERNAL_SERVER_ERROR}
+
+@app.post("/login")
+async def login(request: Request):
+    try:
+        body = await request.body()
+        if not body:
+            return {"error": "No data received", "status": status.HTTP_400_BAD_REQUEST}
+
+        data = await request.json()
+        username = data.get("username")
+        password = data.get("password")
+
+        if not username or not password:
+            return {"error": "Username and password are required", "status": status.HTTP_400_BAD_REQUEST}
+
+        with db.cursor() as cursor:
+            cursor.execute("SELECT * FROM User WHERE username = %s AND password = %s", (username, password))
+            user = cursor.fetchone()
+            if user:
+                return {"message": "Login successful", "status": status.HTTP_200_OK}
+            return {"error": "Invalid username or password", "status": status.HTTP_401_UNAUTHORIZED}
+        
+    except ValueError as e:
+        return {"error": str(e), "status": status.HTTP_400_BAD_REQUEST}
+    except mysql.connector.Error as error:
+        return {"error": str(error), "status": status.HTTP_500_INTERNAL_SERVER_ERROR}
+
+@app.get("/usersInfo")
+def getUserInfo(username: str):
+    with db.cursor() as cursor:
+        cursor.execute("SELECT * FROM User WHERE username = %s", (username,))
+        user = cursor.fetchone()
+        if user:
+            return {"id": user[0], "username": user[1], "password": user[2], "email": user[3], "phone": user[4], "address": user[5]}
+        return {"error": "User not found"}

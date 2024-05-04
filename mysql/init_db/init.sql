@@ -46,3 +46,12 @@ CREATE TABLE Categories (
 CREATE TABLE SkipCount  (
     current_skip_count INT PRIMARY KEY
 );
+
+CREATE TABLE User (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(255) UNIQUE,
+    password VARCHAR(255),
+    email VARCHAR(255) NULL,
+    phone VARCHAR(255) NULL,
+    address VARCHAR(255) NULL
+);
