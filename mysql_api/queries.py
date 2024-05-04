@@ -63,6 +63,7 @@ SEARCH_PRODUCTS_QUERY = """
            GROUP_CONCAT(pr.measureUnitName SEPARATOR ';') AS measureUnitName
     FROM Products p
     JOIN Prices pr ON p.sku = pr.productSKU
-    WHERE p.webName LIKE %s
+    JOIN Categories c ON p.sku = c.productSKU
+    WHERE p.webName LIKE %s OR c.name LIKE %s OR p.brand LIKE %s OR p.ingredients LIKE %s
     GROUP BY p.sku, pr.currencySymbol;
 """
