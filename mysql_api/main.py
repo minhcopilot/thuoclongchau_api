@@ -6,7 +6,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from fastapi import Query
 from queries import *
-
+from logger import logger
 
 env_path = Path(".") / ".env"
 load_dotenv(dotenv_path=env_path)
@@ -28,6 +28,15 @@ db = mysql.connector.connect(
 cursor = db.cursor()
 
 app = FastAPI()
+@app.middleware("http")
+async def log_middleware(request:Request,call_next):
+    log_dict={
+        "method":request.method,
+        "url":request.url,
+    }
+    logger.info(log_dict)
+    response = await call_next(request)
+    return response
 
 def save_product(product):
     product_values = (
