@@ -1,4 +1,5 @@
 from fastapi import FastAPI,status,Request
+from fastapi.middleware.cors import CORSMiddleware
 import mysql.connector
 from fastapi.responses import JSONResponse
 import os
@@ -28,6 +29,15 @@ db = mysql.connector.connect(
 cursor = db.cursor()
 
 app = FastAPI()
+
+# Cấu hình CORS cho tất cả các nguồn (*), phương thức, và tiêu đề
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def save_product(product):
     product_values = (
