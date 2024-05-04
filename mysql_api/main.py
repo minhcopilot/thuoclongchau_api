@@ -110,7 +110,7 @@ async def get_products():
         return JSONResponse(status_code=500, content={"error": "Internal Server Error"})
     
 # Get Detail Product
-@app.get("/product-detail/{sku}")
+@app.get("/products/{sku}")
 async def get_product_detail(sku: str):
     try:
         cursor.execute(GET_DETAIL_PRODUCT_QUERY, (sku,))
@@ -141,7 +141,7 @@ async def get_product_detail(sku: str):
         return JSONResponse(status_code=500, content={"error": "Internal Server Error"})
 
 #Get Categories
-@app.get("/getCategories")
+@app.get("/category")
 async def getCategories():
     try:
         cursor.execute("""SELECT * FROM Categories""")
