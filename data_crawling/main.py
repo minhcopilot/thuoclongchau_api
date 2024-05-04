@@ -74,6 +74,7 @@ def crawl_products():
     return {"message": f"{max_result_count} sản phẩm đã được lưu thành công"}
 
 scheduler = BackgroundScheduler()
+# scheduler.add_job(save_products, 'cron', hour=0, minute=0)# Chạy vào lúc 00:00
 scheduler.add_job(crawl_products, 'interval', seconds=10)
 scheduler.start()
 
