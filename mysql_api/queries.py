@@ -49,7 +49,7 @@ INSERT_CATEGORY_QUERY = """
 GET_ALL_PRODUCTS_QUERY = """
     SELECT p.sku, p.webName, p.image, p.specification, 
            GROUP_CONCAT(pr.price SEPARATOR ';') AS price, 
-           pr.currencySymbol,  -- Include currencySymbol in GROUP BY
+           pr.currencySymbol,
            GROUP_CONCAT(pr.measureUnitName SEPARATOR ';') AS measureUnitName
     FROM Products p
     JOIN Prices pr ON p.sku = pr.productSKU
@@ -71,7 +71,7 @@ SEARCH_PRODUCTS_QUERY = """
 GET_DETAIL_PRODUCT_QUERY = """
 SELECT p.sku ,p.webName, p.image, p.specification, p.ingredients, p.dosageForm, p.brand,p.slug, 
            GROUP_CONCAT(pr.price SEPARATOR ';') AS price, 
-           pr.currencySymbol,  -- Include currencySymbol in GROUP BY
+           pr.currencySymbol,
            GROUP_CONCAT(pr.measureUnitName SEPARATOR ';') AS measureUnitName
     FROM Products p
     JOIN Prices pr ON p.sku = pr.productSKU
