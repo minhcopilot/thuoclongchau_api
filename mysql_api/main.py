@@ -29,6 +29,14 @@ db = mysql.connector.connect(
 cursor = db.cursor()
 
 app = FastAPI()
+# Cấu hình CORS cho tất cả các nguồn (*), phương thức, và tiêu đề
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 @app.middleware("http")
 async def log_middleware(request:Request,call_next):
     log_dict={
@@ -39,14 +47,7 @@ async def log_middleware(request:Request,call_next):
     response = await call_next(request)
     return response
 
-# Cấu hình CORS cho tất cả các nguồn (*), phương thức, và tiêu đề
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+
 
 def save_product(product):
     product_values = (

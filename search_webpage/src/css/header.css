@@ -1,0 +1,39 @@
+.header {
+    background-color: #f0f2f5;
+    padding: 0 20px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+  }
+  
+  .header .logo  {
+    height: 64px;
+    display: inline-block;
+  }
+  
+  .menu {
+    line-height: 64px;
+    margin-inline: 50px;
+  }
+  
+  .left-content {
+    margin-left: auto;
+    display: flex ;
+    align-items: center ;
+  }
+  
+  .search-input {
+    width: 300px;
+    margin: 0 20px;
+    height: 30;
+  }
+  
+  .primary-button {
+    margin-right: 10px;
+  }
+  
+  .register-button {
+    margin-right: 30px;
+  }
+
+  

@@ -33,10 +33,12 @@ services:
     networks:
       - app-network
 
-  # search_webpage:
-  #   container_name: webpage_service
-  #   build: ./search_webpage
-  #   ports:
-  #     - "3001:3030"
-  #   networks:
-  #     - app-network
+  search_webpage:
+    container_name: webpage_service
+    build: ./search_webpage
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api_service
+    networks:
+      - app-network

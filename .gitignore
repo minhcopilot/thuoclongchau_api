@@ -8,3 +8,6 @@ env/*
 
 __pycache__/
 client_secrets.json
+/node_modules
+node_modules/
+node_modules/*
