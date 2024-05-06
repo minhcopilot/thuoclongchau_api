@@ -39,7 +39,7 @@ services:
     container_name: webpage_service
     build: ./search_webpage
     ports:
-      - "3000:3030"
+      - "3000:3000"
     networks:
       - app-network
     depends_on:
