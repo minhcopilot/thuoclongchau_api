@@ -85,7 +85,7 @@ def crawl_products():
     products, max_result_count = crawl_data(current_skip_count)
     if products is None:
         return {"error": "Không thể lấy dữ liệu"}, status.HTTP_500_INTERNAL_SERVER_ERROR
-    save_current_skip_count(db, current_skip_count)
+    save_current_skip_count(db, current_skip_count+ max_result_count)
     return {"message": f"{max_result_count} sản phẩm đã được lưu thành công"}
 
 scheduler = BackgroundScheduler()
