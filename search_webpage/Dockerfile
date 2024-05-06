@@ -3,7 +3,7 @@ FROM node:18
 
 WORKDIR /search_webpage
 
-COPY ./package.json ./
+COPY ./package*.json ./
 
 RUN npm install
 
