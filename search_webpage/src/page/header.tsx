@@ -4,6 +4,7 @@ import { ShoppingCartOutlined } from '@ant-design/icons';
 import '../css/header.css';
 import logo from '../images/logo.png';
 import {  Link} from 'react-router-dom';
+import { ProductOutlined, UsergroupAddOutlined} from '@ant-design/icons';
 
 
 const { Header } = Layout;
@@ -17,8 +18,8 @@ const HeaderLayout: React.FC = () => {
       </div>
       <Menu theme="light" mode="horizontal" defaultSelectedKeys={['home']} className="menu">
        
-        <Menu.Item key="products"><Link to='/products'>Sản phẩm</Link></Menu.Item> 
-        <Menu.Item key="about"><Link to='/aboutUs'>Giới thiệu</Link></Menu.Item>
+        <Menu.Item icon={<ProductOutlined />} key="products" ><Link to='/products'>Sản phẩm</Link></Menu.Item> 
+        <Menu.Item icon={<UsergroupAddOutlined />}  key="about"><Link to='/aboutUs'>Giới thiệu</Link></Menu.Item>
 
        
       </Menu>
