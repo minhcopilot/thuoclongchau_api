@@ -3,24 +3,24 @@ import { Layout, Row, Col } from 'antd';
 import footer from '../images/footer.jpg';
 
 const { Footer } = Layout;
-window.addEventListener('scroll', () => {
-  const footer = document.querySelector('.ant-layout-footer') as HTMLElement;
-  const scrollPosition = window.scrollY;
-  const windowHeight = window.innerHeight;
-  const bodyHeight = document.body.offsetHeight;
+// window.addEventListener('scroll', () => {
+//   const footer = document.querySelector('.ant-layout-footer') as HTMLElement;
+//   const scrollPosition = window.scrollY;
+//   const windowHeight = window.innerHeight;
+//   const bodyHeight = document.body.offsetHeight;
 
-  // Kiểm tra xem vị trí cuộn của trang có ở cuối cùng hay không
-  if (scrollPosition + windowHeight >= bodyHeight) {
-      footer.style.display = 'none'; // Ẩn footer khi cuộn xuống cuối trang
-  } else {
-      footer.style.display = 'block'; // Hiện footer trong các trường hợp khác
-  }
-});
+//   // Kiểm tra xem vị trí cuộn của trang có ở cuối cùng hay không
+//   if (scrollPosition + windowHeight >= bodyHeight) {
+//       footer.style.display = 'none'; // Ẩn footer khi cuộn xuống cuối trang
+//   } else {
+//       footer.style.display = 'block'; // Hiện footer trong các trường hợp khác
+//   }
+// });
 
 
 const CustomFooter: React.FC = () => {
   return (
-    <Footer style={{ backgroundColor: '#f0f2f5', padding: '24px 50px', position: 'fixed', bottom: 0, width: '95%' }}>
+    <Footer style={{ backgroundColor: '#f0f2f5', padding: '24px 50px', bottom: 0, width: '95%', marginTop: 100 }}>
   <Row justify="space-between" align="middle">
     <Col> 
       <div style={{ display: 'flex', alignItems: 'center' }}>

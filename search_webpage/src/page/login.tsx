@@ -73,7 +73,7 @@ try {
     name="login"
     initialValues={{ remember: true }}
     onFinish={onFinish}
-    style={{ maxWidth: 300, margin: 'auto' }}
+    style={{ maxWidth: 300, margin: 'auto', height: 500 }}
   >
     <Form.Item
       name="username"

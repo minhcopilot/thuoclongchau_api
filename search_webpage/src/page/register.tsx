@@ -39,7 +39,7 @@ try {
     <h1 style={{textAlign: "center"}}>Đăng ký tài khoản</h1>
       <Form form={form} name="register" onFinish={onFinishRegister} 
       initialValues={{ remember: true }}
-      style={{ maxWidth: 300, margin: 'auto', marginTop: 50 }}>
+      style={{ maxWidth: 300, margin: 'auto', marginTop: 50, height: 500  }}>
         <Form.Item
           name="username"
           rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập!' }]}
