@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, Input, Button, Checkbox, Modal, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { axiosClient } from '../libraries/axiosClient';
+import Cookies from 'js-cookie';
 const LoginForm: React.FC = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState<boolean>(false);
@@ -17,6 +18,8 @@ try {
       // Kiểm tra nội dung của phản hồi để xác định đăng nhập có thành công hay không
       if (response.data.message === 'Login successful') {
         console.log('Đăng nhập thành công');
+           // Lưu username vào cookie với tên là 'username'
+        Cookies.set('username', username);
         // Thông báo thành công đăng nhập
         message.success('Đăng nhập thành công');
         // Chuyển hướng người dùng đến trang chính sau khi đăng nhập thành công
@@ -43,7 +46,8 @@ try {
      if (response.status === 200) {
       if (response.data.message === 'User registered successfully') {
         console.log('Đăng kí thành công');
-        // Thông báo thành công đăng nhập
+        // Thông báo thành công đăng nhập\
+      
         message.success('Đăng kí thành công');
         // Chuyển hướng người dùng đến trang chính sau khi đăng nhập thành công
         setLoading(false);

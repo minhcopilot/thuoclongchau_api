@@ -10,6 +10,7 @@ import CustomContent from './page/content';
 import LoginForm from './page/login';
 import ProductDetail from './page/details';
 import AboutUs from './page/aboutUs';
+import RegisterPage from './page/register';
 
 
 const root = ReactDOM.createRoot(
@@ -24,6 +25,7 @@ root.render(
        
          <Route path='/products' element={<CustomContent  />}/>
          <Route path='/login' element={<LoginForm  />}/>
+         <Route path='/register' element={<RegisterPage  />}/>
          <Route path='/aboutUs' element={<AboutUs  />}/>
          <Route/>
          
