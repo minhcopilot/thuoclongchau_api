@@ -7,7 +7,7 @@ from pathlib import Path
 from fastapi import FastAPI, status, Request
 from apscheduler.schedulers.background import BackgroundScheduler
 from logger import logger
-
+import pytz
 env_path = Path(".") / ".env"
 load_dotenv(dotenv_path=env_path)
 
@@ -88,7 +88,7 @@ def crawl_products():
     save_current_skip_count(db, current_skip_count+ max_result_count)
     return {"message": f"{max_result_count} sản phẩm đã được lưu thành công"}
 
-scheduler = BackgroundScheduler()
-# scheduler.add_job(save_products, 'cron', hour=0, minute=0)  # Chạy vào lúc 00:00
+scheduler = BackgroundScheduler(timezone=pytz.timezone('Asia/Ho_Chi_Minh'))
+# scheduler.add_job(crawl_products, 'cron', hour=16, minute=30)  # Chạy vào lúc 16:30
 scheduler.add_job(crawl_products, 'interval', seconds=20, max_instances=1)
 scheduler.start()
