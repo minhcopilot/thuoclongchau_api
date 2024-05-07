@@ -20,29 +20,29 @@ window.addEventListener('scroll', () => {
 
 const CustomFooter: React.FC = () => {
   return (
-    <Footer style={{ backgroundColor: '#f0f2f5', padding: '24px 50px', position: 'fixed', bottom: 0, width: '100%' }}>
-      <Row justify="space-between" align="middle">
-        <Col flex="auto">
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <img src={footer} alt="Logo" style={{ width: '80px', marginRight: '16px' }} />
-            <span style={{ fontSize: '18px', fontWeight: 'bold' }}>Footer</span>
-          </div>
+    <Footer style={{ backgroundColor: '#f0f2f5', padding: '24px 50px', position: 'fixed', bottom: 0, width: '95%' }}>
+  <Row justify="space-between" align="middle">
+    <Col> 
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <img src={footer} alt="Logo" style={{ width: '80px', marginRight: '16px' }} />
+        <span style={{ fontSize: '18px', fontWeight: 'bold' }}>Nhà thuốc long châu</span>
+      </div>
+    </Col>
+    <Col > 
+      <Row gutter={[16, 16]} justify="end">
+        <Col>
+          <div style={{ fontSize: '16px', color: '#333' }}>Về chúng tôi</div>
         </Col>
-        <Col flex="auto">
-          <Row gutter={[16, 16]} justify="end">
-            <Col>
-              <div style={{ fontSize: '16px', color: '#333' }}>Về chúng tôi</div>
-            </Col>
-            <Col>
-              <div style={{ fontSize: '16px', color: '#333' }}>Danh mục</div>
-            </Col>
-            <Col>
-              <div style={{ fontSize: '16px', color: '#333' }}>Tìm hiểu thêm</div>
-            </Col>
-          </Row>
+        <Col>
+          <div style={{ fontSize: '16px', color: '#333' }}>Danh mục</div>
+        </Col>
+        <Col>
+          <div style={{ fontSize: '16px', color: '#333' }}>Tìm hiểu thêm</div>
         </Col>
       </Row>
-    </Footer>
+    </Col>
+  </Row>
+</Footer>
   );
 };
 

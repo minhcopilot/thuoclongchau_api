@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Layout, Input, Pagination, Button } from 'antd';
 import { axiosClient } from '../libraries/axiosClient';
 import '../css/content.css';
@@ -13,38 +13,56 @@ interface Product {
   image: string;
   webName: string;
   price?: [number];
+  currencySymbol: string;
+  measureUnitName: [string, string]; 
 
 }
 
 const CustomContent: React.FC = () => {
-  const [originalProducts, setOriginalProducts] = useState<Product[]>([]);
+  
+  const [searchProducts, setSearchProducts] = useState<Product[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [perPage] = useState<number>(24); // Số lượng sản phẩm trên mỗi trang
   const [products, setProducts] = useState<Product[]>([]);
-
+  const [categories, setCategories] = useState<Product[]>([]);
 
 
   const getProducts = async () => {
     try {
       const response = await axiosClient.get('/products');
-      setOriginalProducts(response.data);
       setProducts(response.data);
     } catch (error) {
       console.log('Error:', error);
     }
   };
 
-  React.useEffect(() => {
-    getProducts();
+  const getSearchProducts = async(keyword: string) =>{
+    try {
+      const response = await axiosClient.get(`/search?s=${keyword}`);
+      setSearchProducts(response.data);
+    } catch (error) {
+      console.error('Error:', error);
+      return null;
+    }
+  }
+
+  useEffect(() => {
+    getProducts(); 
+    getSearchProducts(searchTerm);
+    const intervalId = setInterval(() => {
+      getProducts(); 
+      // console.log('Interval activated');
+    }, 5000); 
+
+    return () => clearInterval(intervalId); // Xóa interval khi component unmount để tránh memory leak
   }, []);
 
+
   const handleSearch = (value: string) => {
-    const filteredProducts = originalProducts.filter((product) =>
-      product.webName.toLowerCase().includes(value.toLowerCase())
-    );
-    setProducts(filteredProducts);
+    setSearchTerm(value);
     setCurrentPage(1); // Reset trang về trang đầu tiên sau mỗi lần tìm kiếm
+    getSearchProducts(value);
   };
 
   const handlePageChange = (page: number) => {
@@ -53,7 +71,9 @@ const CustomContent: React.FC = () => {
 
   const startIndex = (currentPage - 1) * perPage;
   const endIndex = startIndex + perPage;
-  const currentProducts = products.slice(startIndex, endIndex);
+  const currentProducts = searchProducts.slice(startIndex, endIndex);
+
+
 
 
   function truncateText(text: string, maxLength: number) {
@@ -90,7 +110,7 @@ const CustomContent: React.FC = () => {
           <h3 className="custom-card__title">{truncateText(product.webName, 20)}</h3>
           {product.price && (
             <p className="custom-card__description">
-              Price: {product.price}
+              Price: {product.price[0]} {product.currencySymbol} / {product.measureUnitName[0]}
             </p>
           )}
           <Button type="primary">Xem chi tiết</Button>
@@ -104,7 +124,7 @@ const CustomContent: React.FC = () => {
             <Pagination
               current={currentPage}
               pageSize={perPage}
-              total={products.length} // Tổng số sản phẩm
+              total={searchTerm !== '' ? searchProducts.length : products.length} 
               onChange={handlePageChange}
             />
           </div>

@@ -4,12 +4,12 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Home from './page/home';
 import HeaderLayout from './page/header';
 import CustomFooter from './page/footer';
 import CustomContent from './page/content';
 import LoginForm from './page/login';
 import ProductDetail from './page/details';
+import AboutUs from './page/aboutUs';
 
 
 const root = ReactDOM.createRoot(
@@ -20,13 +20,15 @@ root.render(
      <BrowserRouter>
     <HeaderLayout/>
      <Routes>
-       <Route path='/' element={<App/>}/>
-         <Route path='/Home' element={<Home/>}/>
-         <Route path='/products' element={<CustomContent  />}/>
+       <Route path='/' element={<CustomContent/>}/>
        
-         <Route/>
+         <Route path='/products' element={<CustomContent  />}/>
          <Route path='/login' element={<LoginForm  />}/>
+         <Route path='/aboutUs' element={<AboutUs  />}/>
+         <Route/>
+         
          <Route path='/products/:sku' element={<ProductDetail  />}/>
+         
          
          <Route/>
       <Route/>

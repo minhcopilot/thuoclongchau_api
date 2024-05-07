@@ -16,21 +16,15 @@ const HeaderLayout: React.FC = () => {
         <img src={logo} alt="Long Châu Logo" style={{ height: '100%' }} />
       </div>
       <Menu theme="light" mode="horizontal" defaultSelectedKeys={['home']} className="menu">
-        <Menu.Item key="home" > <Link to= "/">Trang chủ</Link></Menu.Item>
+       
         <Menu.Item key="products"><Link to='/products'>Sản phẩm</Link></Menu.Item> 
-        <Menu.Item key="about"><a href='/gioithieu'>Giới thiệu</a></Menu.Item>
+        <Menu.Item key="about"><Link to='/aboutUs'>Giới thiệu</Link></Menu.Item>
 
        
       </Menu>
     
   
       <div className="left-content">
-        <Search
-          placeholder="Tìm kiếm sản phẩm..."
-          className="search-input"
-          allowClear
-          enterButton
-        />
         <Button type="primary" className="primary-button"> <Link to="/login"> Đăng nhập </Link></Button>
         <Button type="primary" className="register-button">Đăng ký</Button>
         <Badge count={5}>
